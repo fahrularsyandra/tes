@@ -32,9 +32,16 @@ Future<void> read() async {
   print('accuracy on k fold validation: ${accuracy.toStringAsFixed(2)}');
   final rawCsvTesting =
       await rootBundle.loadString('assets/datasets/tes.csv');
-  final tes = DataFrame.fromRawCsv(rawCsvContent);
-  // final prediction = createClassifier(sample).predict(tes);
-  // print(prediction.rows);
+  final tes = DataFrame.fromRawCsv(rawCsvTesting);
+  final prediction = createClassifier(sample).predict(tes);
+  print('regression: ${prediction.header}');
+  for (var item in prediction.rows) {
+    print(item);
+  }
   var cek = KnnClassifier(sample, 'Outcome', 2);
   var predict = cek.predict(tes);
+  print('classification: ${predict.header}');
+  for (var item in predict.rows) {
+    print(item);
+  }
 }
